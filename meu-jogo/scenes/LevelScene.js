@@ -1,4 +1,4 @@
-import Player from '../Entities/Player.js';
+import Player from '../entities/Player.js';
 import Enemy from '../entities/Enemy.js';
 import Pizza from '../entities/Pizza.js';
 import SaveSystem from '../systems/SaveSystem.js';
