@@ -1,34 +1,46 @@
 export default class InputController {
   constructor(scene) {
+    // estados finais usados pelo Player
     this.left = false;
     this.right = false;
     this.jump = false;
 
-    // teclado (desktop)
+    // estados mobile
+    this.mobileLeft = false;
+    this.mobileRight = false;
+    this.mobileJump = false;
+
+    // teclado
     this.cursors = scene.input.keyboard.createCursorKeys();
   }
 
   update() {
     // teclado
-    this.left = this.cursors.left.isDown;
-    this.right = this.cursors.right.isDown;
-    this.jump = Phaser.Input.Keyboard.JustDown(this.cursors.up);
+    const keyboardLeft = this.cursors.left.isDown;
+    const keyboardRight = this.cursors.right.isDown;
+    const keyboardJump = Phaser.Input.Keyboard.JustDown(this.cursors.up);
+
+    // combina teclado + mobile
+    this.left = keyboardLeft || this.mobileLeft;
+    this.right = keyboardRight || this.mobileRight;
+
+    this.jump = keyboardJump || this.mobileJump;
+
+    // 🔑 jump mobile é pulso (1 frame)
+    this.mobileJump = false;
   }
 
-  // mobile
+  // ───────── MOBILE ─────────
+
   pressLeft(isDown) {
-    this.left = isDown;
+    this.mobileLeft = isDown;
   }
 
   pressRight(isDown) {
-    this.right = isDown;
+    this.mobileRight = isDown;
   }
 
   pressJump() {
-    this.jump = true;
-  }
-
-  resetJump() {
-    this.jump = false;
+    this.mobileJump = true;
   }
 }
