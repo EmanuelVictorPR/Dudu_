@@ -21,6 +21,7 @@ export default class LevelScene extends Phaser.Scene {
     this.checkpoints = new CheckpointSystem();
     this.lives = new LifeSystem(this.save.vidas);
     this.inputController = new InputController(this);
+    this.input.addPointer(1);
   }
 
   create() {
@@ -329,11 +330,14 @@ export default class LevelScene extends Phaser.Scene {
     left.on('pointerdown', () => this.inputController.pressLeft(true));
     left.on('pointerup', () => this.inputController.pressLeft(false));
     left.on('pointerout', () => this.inputController.pressLeft(false));
+    left.on('pointerupoutside', () => this.inputController.pressLeft(false));
 
     right.on('pointerdown', () => this.inputController.pressRight(true));
     right.on('pointerup', () => this.inputController.pressRight(false));
     right.on('pointerout', () => this.inputController.pressRight(false));
+    right.on('pointerupoutside', () => this.inputController.pressRight(false));
 
     jump.on('pointerdown', () => this.inputController.pressJump());
   }
 }
+
